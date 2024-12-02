@@ -29,16 +29,20 @@ class Queue:
         return self.head.get_value() if self.head else None
 
     def enqueue(self, value):
-        if not self.has_space():
-            print("¡La cola está llena!")
-            return
-        new_node = Node(value)
-        if self.is_empty():
-            self.head = new_node
-            self.tail = new_node
-        else: 
-            self.tail.set_next_node(new_node)
-        self.size += 1
+        if self.has_space():
+            item_to_add = Node(value)
+            logger.info(f"¡Agregando {item_to_add.get_value()} a la cola!")
+            
+            if self.is_empty():
+                self.head = item_to_add
+                self.tail = item_to_add
+            else: 
+                self.tail.set_next_node(item_to_add)
+                self.tail = item_to_add
+            self.size += 1
+
+        else:
+            logger.error("¡Lo sentimos, no hay más espacio!")
 
     def dequeue(self):
         if self.is_empty():
