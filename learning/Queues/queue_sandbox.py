@@ -45,14 +45,19 @@ class Queue:
             logger.error("¡Lo sentimos, no hay más espacio!")
 
     def dequeue(self):
-        if self.is_empty():
-            print("¡La cola ya está vacia!")
-            return None
-
-        removed_value = self.head.get_value()
-        self.head = self.head.get_next_node()
-        self.size -= 1
+        if not self.is_empty():
+            item_to_remove =  self.head
+            logger.info(f"¡Eliminando {item_to_remove} de la cola!")
         
-        if self.is_empty():
-            self.tail = None
-        return removed_value
+            if self.get_size() == 1:
+                self.head = None
+                self.tail = None
+            else:
+                self.head = self.head.get_next_node()
+                
+            self.size -= 1
+            return item_to_remove.get_value()
+            
+        else:
+            logger.info("¡Esta cola está totalmente vacía!")
+            return None
